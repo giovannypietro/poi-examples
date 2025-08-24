@@ -141,6 +141,15 @@ cython_debug/
 # VS Code
 .vscode/
 
+# Additional IDE files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
 # macOS
 .DS_Store
 .AppleDouble
@@ -222,6 +231,16 @@ test_*
 *_test
 *.test
 test.*
+
+# Development and build artifacts
+build/
+dist/
+*.egg-info/
+*.pyc
+__pycache__/
+*.so
+*.dylib
+*.dll
 
 # Development and testing artifacts (specific patterns)
 test_*.pem
