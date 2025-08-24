@@ -4,9 +4,26 @@ Get up and running with the Proof-of-Intent SDK in under 5 minutes!
 
 ## 🚀 Installation
 
+### Prerequisites
+
+- Python 3.8 or higher
+- pip package manager
+
+### Install from PyPI
+
 ```bash
 pip install poi-sdk
 ```
+
+### Install from Source
+
+```bash
+git clone https://github.com/giovannypietro/poi.git
+cd poi/python-sdk
+pip install -e .
+```
+
+**💡 After installation, continue below for certificate setup and first steps.**
 
 ## 🔐 Setting Up Cryptographic Signatures
 

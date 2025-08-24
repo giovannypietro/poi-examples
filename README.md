@@ -30,6 +30,8 @@ is_valid = validator.validate_receipt(receipt)
 print(f"Receipt valid: {is_valid}")
 ```
 
+**📚 For detailed setup instructions, examples, and troubleshooting, see our [QUICKSTART Guide](QUICKSTART.md).**
+
 ## 📖 What is Proof-of-Intent (PoI)?
 
 Proof-of-Intent (PoI) is a cryptographic framework that moves beyond traditional IAM by providing **provable trust** for AI agents. Instead of just asking "Does this agent have permission?", PoI answers "Why is it doing this, right now, on whose behalf, and with what justification?"
@@ -53,23 +55,10 @@ Proof-of-Intent (PoI) is a cryptographic framework that moves beyond traditional
 
 ## 🛠️ Installation
 
-### Prerequisites
-
-- Python 3.8 or higher
-- pip package manager
-
-### Install from PyPI
+**📚 For complete installation instructions, prerequisites, and setup steps, see our [QUICKSTART Guide](QUICKSTART.md).**
 
 ```bash
 pip install poi-sdk
-```
-
-### Install from Source
-
-```bash
-git clone https://github.com/giovannypietro/poi.git
-cd poi/python-sdk
-pip install -e .
 ```
 
 ## 📚 Core Concepts
@@ -156,191 +145,11 @@ is_valid = validator.validate_receipt(receipt)
 print(f"Receipt valid: {is_valid}")
 ```
 
-### Advanced Usage with Custom Fields
-
-```python
-from poi_sdk import PoIReceipt, PoIGenerator
-from datetime import datetime, timedelta, timezone
-
-generator = PoIGenerator()
-
-# Custom receipt with additional context
-receipt = generator.generate_receipt(
-    agent_id="n8n_workflow_001",
-    action="file_upload",
-    target_resource="s3://bucket/documents/",
-    declared_objective="Upload processed documents to cloud storage",
-    risk_context="medium",
-    additional_context={
-        "workflow_id": "wf_123",
-        "trigger_source": "webhook",
-        "data_sensitivity": "internal"
-    },
-    expiration_time=(datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
-)
-```
-
-### Batch Processing
-
-```python
-from poi_sdk import PoIGenerator, PoIValidator
-
-generator = PoIGenerator()
-validator = PoIValidator()
-
-# Generate multiple receipts
-receipts = []
-actions = [
-    ("database_read", "user_profiles", "Read user profile data"),
-    ("api_call", "payment_gateway", "Process payment transaction"),
-    ("file_access", "financial_reports", "Generate monthly report")
-]
-
-for action, resource, objective in actions:
-    receipt = generator.generate_receipt(
-        agent_id="multi_agent_system",
-        action=action,
-        target_resource=resource,
-        declared_objective=objective
-    )
-    receipts.append(receipt)
-
-# Validate all receipts
-valid_receipts = []
-for receipt in receipts:
-    if validator.validate_receipt(receipt):
-        valid_receipts.append(receipt)
-
-print(f"Valid receipts: {len(valid_receipts)}/{len(receipts)}")
-```
+**💡 For more examples including LangGraph integration, N8N workflows, and advanced usage patterns, see our [QUICKSTART Guide](QUICKSTART.md).**
 
 ## 🔌 Integration Examples
 
-### LangGraph Integration
-
-```python
-from langgraph.graph import StateGraph, END
-from poi_sdk import PoIGenerator
-
-class PoILangGraphState:
-    def __init__(self):
-        self.poi_generator = PoIGenerator()
-        self.current_receipt = None
-
-def generate_poi(state):
-    """Generate PoI receipt before taking action"""
-    receipt = state.poi_generator.generate_receipt(
-        agent_id="langgraph_agent",
-        action="llm_inference",
-        target_resource="openai_api",
-        declared_objective="Generate response to user query"
-    )
-    state.current_receipt = receipt
-    return state
-
-def take_action(state):
-    """Take action with PoI receipt"""
-    if state.current_receipt:
-        print(f"Action taken with PoI receipt: {state.current_receipt.receipt_id}")
-    return state
-
-# Build workflow
-workflow = StateGraph(PoILangGraphState)
-workflow.add_node("generate_poi", generate_poi)
-workflow.add_node("take_action", take_action)
-workflow.add_edge("generate_poi", "take_action")
-workflow.add_edge("take_action", END)
-
-# Run workflow
-app = workflow.compile()
-result = app.invoke({})
-```
-
-### N8N Integration
-
-```python
-# N8N Python Code Node
-from poi_sdk import PoIGenerator, PoIValidator
-import json
-
-def main():
-    # Get input from previous node
-    input_data = json.loads(input_data)
-    
-    # Initialize PoI
-    generator = PoIGenerator()
-    
-    # Generate receipt for this workflow step
-    receipt = generator.generate_receipt(
-        agent_id="n8n_workflow",
-        action=input_data.get("action", "unknown"),
-        target_resource=input_data.get("resource", "unknown"),
-        declared_objective=input_data.get("objective", "Workflow execution")
-    )
-    
-    # Add receipt to output
-    output = {
-        "poi_receipt": receipt.to_dict(),
-        "original_data": input_data,
-        "timestamp": receipt.timestamp
-    }
-    
-    return json.dumps(output)
-
-# Execute
-result = main()
-```
-
-### Custom Agent Framework
-
-```python
-from poi_sdk import PoIGenerator, PoIValidator
-from typing import Dict, Any
-
-class PoIAgent:
-    def __init__(self, agent_id: str):
-        self.agent_id = agent_id
-        self.poi_generator = PoIGenerator()
-        self.poi_validator = PoIValidator()
-        self.action_history = []
-    
-    def execute_with_poi(self, action: str, resource: str, objective: str, **kwargs) -> Dict[str, Any]:
-        """Execute action with Proof-of-Intent"""
-        
-        # Generate receipt
-        receipt = self.poi_generator.generate_receipt(
-            agent_id=self.agent_id,
-            action=action,
-            target_resource=resource,
-            declared_objective=objective,
-            **kwargs
-        )
-        
-        # Execute action (your custom logic here)
-        result = self._execute_action(action, resource, **kwargs)
-        
-        # Record action with receipt
-        action_record = {
-            "receipt": receipt,
-            "result": result,
-            "timestamp": receipt.timestamp
-        }
-        self.action_history.append(action_record)
-        
-        return action_record
-    
-    def _execute_action(self, action: str, resource: str, **kwargs):
-        """Override this method with your custom action logic"""
-        return {"status": "success", "action": action, "resource": resource}
-
-# Usage
-agent = PoIAgent("custom_agent_001")
-result = agent.execute_with_poi(
-    action="data_processing",
-    resource="customer_database",
-    objective="Process customer data for analytics"
-)
-```
+**📚 For detailed integration examples with LangGraph, N8N, and custom agent frameworks, see our [QUICKSTART Guide](QUICKSTART.md).**
 
 ## 🔐 Security Features
 
@@ -363,6 +172,8 @@ result = agent.execute_with_poi(
 - **Replay Attack Prevention**: One-time use receipts
 
 ## 📋 Configuration
+
+**💡 For detailed configuration instructions including certificate generation and environment setup, see our [QUICKSTART Guide](QUICKSTART.md).**
 
 ### Environment Variables
 
@@ -396,6 +207,8 @@ poi:
 ```
 
 ## 🧪 Testing
+
+**💡 For testing your certificate setup and running examples, see our [QUICKSTART Guide](QUICKSTART.md).**
 
 ### Run Tests
 
