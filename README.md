@@ -109,6 +109,6 @@ Thanks to all contributors who are helping build a more trustworthy AI future. S
 3. **🔗 Integrate** with your agentic systems
 4. **🌟 Join** the conversation about building trustworthy AI
 
-**🎉 Your package is now live on [PyPI](https://pypi.org/project/poi-sdk/)!**
+**🎉 The PoI package is now live on [PyPI](https://pypi.org/project/poi-sdk/)!**
 
 This is just the beginning—your input will shape where we go next!

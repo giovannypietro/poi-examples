@@ -25,19 +25,19 @@ pip install -e .
 
 **💡 After installation, continue below for certificate setup and first steps.**
 
-## 🛠️ Automated Setup with Utils Scripts
+## Automated Setup with Utils Scripts
 
-The PoI SDK includes utility scripts to automate the entire setup process. These scripts handle package installation, certificate generation, and environment configuration automatically.
+The PoI SDK includes utility scripts to automate the entire setup process. These scripts handle package installation, test certificate generation, and environment configuration automatically.
 
 ### 📋 Utils Scripts Quick Reference
 
 | Script | Purpose | Use Case | Complexity |
 |--------|---------|----------|------------|
 | `setup_environment.py` | Complete setup | 🚀 One-stop solution | 🟢 Easy |
-| `install_package.py` | Package installation | 📦 Install SDK only | 🟢 Easy |
-| `generate_certificates_simple.py` | Certificate generation | 🔐 Generate keys/certs | 🟢 Easy |
-| `generate_certificates.py` | Advanced certificate generation | 🎨 Custom settings | 🟡 Medium |
-| `README.md` | Utils documentation | 📚 Complete guide | 📖 Reference |
+| `install_package.py` | Package installation | Install SDK only | 🟢 Easy |
+| `generate_certificates_simple.py` | Certificate generation | Generate keys/certs | 🟢 Easy |
+| `generate_certificates.py` | Advanced certificate generation | Custom settings | 🟡 Medium |
+| `README.md` | Utils documentation | Complete guide | Reference |
 
 ### 🚀 One-Stop Setup (Recommended)
 
@@ -74,7 +74,7 @@ python utils/generate_certificates_simple.py
 
 **💡 The simple version is recommended for most users. For advanced options, see `utils/generate_certificates.py`**
 
-### 📋 What the Utils Scripts Generate
+### What the Utils Scripts Generate
 
 The utils scripts automatically create:
 
@@ -96,7 +96,7 @@ Configuration Files:
 └── poi_config_test.yaml     # SDK configuration
 ```
 
-### 🔧 Manual Setup vs Utils Scripts
+### Manual Setup vs Utils Scripts
 
 | Setup Method | Speed | Customization | Complexity |
 |--------------|-------|---------------|------------|
@@ -105,11 +105,8 @@ Configuration Files:
 
 **💡 For beginners and quick development, use the utils scripts. For production, consider manual setup with proper key management.**
 
-## Test Your Installation
 
-Let's verify that your PoI SDK installation is working correctly:
-
-### Quick Installation Test
+## Quick Installation Test And Manual Setup
 
 ```python
 from poi_sdk import PoIGenerator, PoIValidator
@@ -833,12 +830,6 @@ def run_utils_with_error_handling():
 # Run with error handling
 run_utils_with_error_handling()
 ```
-
-
-
-
-
-
 
 
 
