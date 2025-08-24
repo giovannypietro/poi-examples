@@ -1,0 +1,19 @@
+# Protect test files and certificates from accidental commits
+test_keys/* -text
+test_certs/* -text
+.env.test -text
+poi_config_test.yaml -text
+
+# Mark these as binary to prevent accidental commits
+*.pem binary
+*.key binary
+*.crt binary
+*.cer binary
+*.p12 binary
+*.pfx binary
+
+# Protect against force adding
+test_keys/ export-ignore
+test_certs/ export-ignore
+.env.test export-ignore
+poi_config_test.yaml export-ignore
