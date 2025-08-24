@@ -159,6 +159,11 @@ Desktop.ini
 *.bak
 *.swp
 *.swo
+*.temp
+*.cache
+*.log
+*.pid
+*.lock
 
 # Generated receipts (for demo purposes)
 *_receipt.json
@@ -185,3 +190,49 @@ test_keys/
 test_certs/
 .env.test
 poi_config_test.yaml
+
+# Additional test and development files
+*.test
+*.dev
+*.local
+test_*.py
+*_test.py
+*_tests.py
+
+# Test directories (but keep actual test suite)
+test_keys/
+test_certs/
+test_certificates/
+test_certificates_*/
+test_keys_*/
+test_certs_*/
+
+# Test file patterns
+*.test.*
+*.test.yml
+*.test.yaml
+*.test.json
+*.test.xml
+*.test.ini
+*.test.conf
+*.test.cfg
+
+# Additional test patterns
+test_*
+*_test
+*.test
+test.*
+
+# Development and testing artifacts (specific patterns)
+test_*.pem
+test_*.key
+test_*.crt
+test_*.cer
+test_*.p12
+test_*.pfx
+*_test.pem
+*_test.key
+*_test.crt
+*_test.cer
+*_test.p12
+*_test.pfx
