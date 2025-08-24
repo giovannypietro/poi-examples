@@ -79,6 +79,25 @@ python utils/generate_certificates.py
 - OpenSSL must be installed
 - Python 3.8+
 
+### 4. **`generate_certificates_simple.py`** - Simple Certificate Generator
+**Simplified, reliable certificate generation script.**
+
+**What it does:**
+- ✅ Same functionality as generate_certificates.py
+- ✅ Simplified subprocess handling
+- ✅ More reliable execution
+- ✅ Better error reporting
+
+**Usage:**
+```bash
+python utils/generate_certificates_simple.py
+```
+
+**Recommended for:**
+- First-time users
+- Troubleshooting certificate generation issues
+- Reliable certificate generation
+
 ---
 
 ## 🔧 Prerequisites
