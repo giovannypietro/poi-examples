@@ -32,6 +32,14 @@ Proof-of-Intent (PoI) is a cryptographic framework that moves beyond traditional
 ## Installation
 
 **📚 For complete installation instructions, prerequisites, and setup steps, see our [QUICKSTART Guide](QUICKSTART.md).**
+
+### Quick Install
+
+```bash
+pip install poi-sdk
+```
+
+**🎉 Package now available on [PyPI](https://pypi.org/project/poi-sdk/)!**
 `
 ##  Core Concepts
 
@@ -65,45 +73,13 @@ Verifies receipt authenticity and validity by checking cryptographic signatures,
 
 ## API Reference
 
-### Core Classes
+**📚 For detailed API documentation, method signatures, and examples, see our [QUICKSTART Guide](QUICKSTART.md).**
 
-#### `PoIReceipt`
+The SDK provides three core classes:
 
-Main receipt class containing all intent information.
-
-**Attributes:**
-- `receipt_id`: Unique identifier for the receipt
-- `timestamp`: Creation timestamp (ISO 8601)
-- `agent_id`: Identifier of the agent taking action
-- `action`: Type of action being performed
-- `target_resource`: Resource being accessed
-- `declared_objective`: Stated purpose of the action
-- `risk_context`: Risk level assessment
-- `expiration_time`: When the receipt expires
-- `signature`: Cryptographic signature
-
-**Methods:**
-- `to_dict()`: Convert to dictionary
-- `to_json()`: Convert to JSON string
-- `is_expired()`: Check if receipt has expired
-
-#### `PoIGenerator`
-
-Generates and signs PoI receipts.
-
-**Methods:**
-- `generate_receipt(**kwargs)`: Create new receipt
-- `sign_receipt(receipt)`: Cryptographically sign receipt
-- `validate_receipt_structure(receipt)`: Validate receipt format
-
-#### `PoIValidator`
-
-Validates receipt authenticity and validity.
-
-**Methods:**
-- `validate_receipt(receipt)`: Validate receipt signature and format
-- `verify_signature(receipt)`: Verify cryptographic signature
-- `check_expiration(receipt)`: Check if receipt is expired
+- **`PoIReceipt`**: Main receipt class with all intent information
+- **`PoIGenerator`**: Creates and cryptographically signs receipts
+- **`PoIValidator`**: Verifies receipt authenticity and validity
 
 ## 🤝 Contributing
 
@@ -128,9 +104,11 @@ Thanks to all contributors who are helping build a more trustworthy AI future. S
 
 **Ready to build provable trust for your AI agents?**
 
-1. **Install** the SDK: `pip install poi-sdk`
-2. **Follow** the [QUICKSTART Guide](QUICKSTART.md) for examples
-3. **Integrate** with your agentic systems
-4. **Join** the conversation about building trustworthy AI
+1. **🚀 Install** the SDK: `pip install poi-sdk`
+2. **📚 Follow** the [QUICKSTART Guide](QUICKSTART.md) for examples
+3. **🔗 Integrate** with your agentic systems
+4. **🌟 Join** the conversation about building trustworthy AI
+
+**🎉 Your package is now live on [PyPI](https://pypi.org/project/poi-sdk/)!**
 
 This is just the beginning—your input will shape where we go next!
