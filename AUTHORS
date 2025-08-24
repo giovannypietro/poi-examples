@@ -1,0 +1,32 @@
+# Authors of the Proof-of-Intent (PoI) SDK
+
+This file lists the contributors to the PoI SDK project.
+
+## Original Author
+
+**Aldo Pietropaolo** - *Initial work* - [giovannypietro](https://github.com/giovannypietro)
+
+## Contributors
+
+<!-- Add your name here when you contribute -->
+
+## How to Add Your Name
+
+If you've contributed to the PoI SDK, please add your name to this file:
+
+1. Fork the repository
+2. Add your name in the Contributors section above
+3. Use the format: **Your Name** - *Description of contribution* - [username](https://github.com/username)
+4. Submit a pull request
+
+## Contribution Types
+
+- **Code**: Writing or improving code
+- **Documentation**: Writing or improving documentation
+- **Testing**: Writing or improving tests
+- **Bug Reports**: Reporting and helping fix bugs
+- **Feature Requests**: Suggesting and helping implement features
+- **Review**: Code review and feedback
+- **Community**: Helping other users and promoting the project
+
+Thank you for contributing to making AI agents more trustworthy and auditable!

@@ -1,0 +1,77 @@
+# PoI SDK Configuration Example
+# Copy this file to poi_config.yaml and customize for your environment
+
+poi:
+  # Cryptographic key configuration
+  keys:
+    # Path to your private key file (PEM format)
+    private_key_path: /path/to/your/private_key.pem
+    
+    # Path to your certificate file (PEM format)
+    certificate_path: /path/to/your/certificate.pem
+    
+    # Path to your public key file (PEM format)
+    public_key_path: /path/to/your/public_key.pem
+  
+  # Default settings for receipt generation
+  defaults:
+    # Default expiration time in hours
+    expiration_hours: 1
+    
+    # Default risk threshold (low, medium, high, critical)
+    risk_threshold: medium
+    
+    # Default signature algorithm (rsa, ecdsa)
+    signature_algorithm: rsa
+  
+  # Validation settings
+  validation:
+    # Clock skew tolerance in seconds (for timestamp validation)
+    clock_skew_tolerance_seconds: 300
+    
+    # Whether to require certificate validation
+    require_certificate_validation: true
+
+# Example configurations for different environments:
+
+# Development environment
+# poi:
+#   keys:
+#     private_key_path: ./keys/dev_private_key.pem
+#     certificate_path: ./keys/dev_certificate.pem
+#     public_key_path: ./keys/dev_public_key.pem
+#   defaults:
+#     expiration_hours: 24
+#     risk_threshold: low
+#     signature_algorithm: rsa
+#   validation:
+#     clock_skew_tolerance_seconds: 600
+#     require_certificate_validation: false
+
+# Production environment
+# poi:
+#   keys:
+#     private_key_path: /etc/poi/keys/prod_private_key.pem
+#     certificate_path: /etc/poi/keys/prod_certificate.pem
+#     public_key_path: /etc/poi/keys/prod_public_key.pem
+#   defaults:
+#     expiration_hours: 0.5
+#     risk_threshold: medium
+#     signature_algorithm: ecdsa
+#   validation:
+#     clock_skew_tolerance_seconds: 60
+#     require_certificate_validation: true
+
+# High-security environment
+# poi:
+#   keys:
+#     private_key_path: /secure/poi/keys/high_sec_private_key.pem
+#     certificate_path: /secure/poi/keys/high_sec_certificate.pem
+#     public_key_path: /secure/poi/keys/high_sec_public_key.pem
+#   defaults:
+#     expiration_hours: 0.25
+#     risk_threshold: high
+#     signature_algorithm: ecdsa
+#   validation:
+#     clock_skew_tolerance_seconds: 30
+#     require_certificate_validation: true
