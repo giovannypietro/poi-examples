@@ -176,3 +176,6 @@ logs/
 htmlcov/
 coverage.xml
 .coverage
+
+# Package folder (contains PyPI package)
+package/

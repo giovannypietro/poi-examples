@@ -120,7 +120,6 @@ Thanks to all contributors who are helping build a more trustworthy AI future. S
 ## 🔗 Links
 
 - **GitHub Repository**: [https://github.com/giovannypietro/poi](https://github.com/giovannypietro/poi)
-- **Documentation**: [https://poi-sdk.readthedocs.io](https://poi-sdk.readthedocs.io)
 - **PyPI Package**: [https://pypi.org/project/poi-sdk](https://pypi.org/project/poi-sdk)
 - **Issues**: [https://github.com/giovannypietro/poi/issues](https://github.com/giovannypietro/poi/issues)
 - **Discussions**: [https://github.com/giovannypietro/poi/discussions](https://github.com/giovannypietro/poi/discussions)
