@@ -25,6 +25,26 @@ pip install -e .
 
 **💡 After installation, continue below for certificate setup and first steps.**
 
+## 🧪 Test Your Installation
+
+Let's verify that your PoI SDK installation is working correctly:
+
+### Quick Installation Test
+
+```python
+from poi_sdk import PoIGenerator, PoIValidator
+
+# Test basic import and initialization
+generator = PoIGenerator()
+validator = PoIValidator()
+
+print("✅ PoI SDK imported successfully!")
+print("✅ Generator initialized:", generator)
+print("✅ Validator initialized:", validator)
+```
+
+**💡 If the above test works, continue to the next section for certificate setup. If you get errors, check your Python version and installation.**
+
 ## 🔐 Setting Up Cryptographic Signatures
 
 To generate and validate cryptographically signed receipts, you'll need to create test certificates and configure your environment.
@@ -521,166 +541,13 @@ except Exception as e:
     print(f"🚨 Generation error: {e}")
 ```
 
-## 🧪 Complete Setup Test
 
-Let's verify that everything is working correctly with a comprehensive test:
 
-### 1. Create Test Script
 
-Create `test_setup.py`:
 
-```python
-#!/usr/bin/env python3
-"""
-Complete PoI SDK setup test with certificates.
-Run this after setting up your certificates to verify everything works.
-"""
 
-import os
-from poi_sdk import PoIGenerator, PoIValidator, PoIReceipt
-from datetime import datetime, timezone, timedelta
 
-def test_certificate_setup():
-    """Test the complete certificate setup."""
-    print("🔐 Testing PoI SDK Certificate Setup")
-    print("=" * 50)
-    
-    # Check environment variables
-    print("\n1. Checking environment configuration...")
-    env_vars = [
-        'POI_PRIVATE_KEY_PATH',
-        'POI_CERTIFICATE_PATH', 
-        'POI_PUBLIC_KEY_PATH'
-    ]
-    
-    for var in env_vars:
-        value = os.getenv(var)
-        if value:
-            print(f"   ✅ {var}: {value}")
-        else:
-            print(f"   ⚠️  {var}: Not set")
-    
-    # Test generator with certificates
-    print("\n2. Testing receipt generation with certificates...")
-    try:
-        generator = PoIGenerator()
-        receipt = generator.generate_receipt(
-            agent_id="certificate_test_agent",
-            action="certificate_test_action",
-            target_resource="certificate_test_resource",
-            declared_objective="Test certificate-based signing",
-            additional_context={
-                "test_type": "certificate_setup",
-                "timestamp": datetime.now(timezone.utc).isoformat()
-            }
-        )
-        print(f"   ✅ Receipt generated: {receipt.receipt_id}")
-        print(f"   ✅ Signature algorithm: {receipt.signature_algorithm}")
-        print(f"   ✅ Signature length: {len(receipt.signature)} characters")
-        
-    except Exception as e:
-        print(f"   ❌ Generation failed: {e}")
-        return False
-    
-    # Test validator with certificates
-    print("\n3. Testing receipt validation with certificates...")
-    try:
-        validator = PoIValidator()
-        is_valid = validator.validate_receipt(receipt)
-        print(f"   ✅ Receipt validation: {'SUCCESS' if is_valid else 'FAILED'}")
-        
-        if is_valid:
-            print("   🎉 Cryptographic signature verification successful!")
-        else:
-            print("   ⚠️  Validation failed - check your key configuration")
-            
-    except Exception as e:
-        print(f"   ❌ Validation failed: {e}")
-        print("   💡 This might be expected in development mode")
-    
-    # Test receipt operations
-    print("\n4. Testing receipt operations...")
-    try:
-        # Test serialization
-        receipt_dict = receipt.to_dict()
-        receipt_json = receipt.to_json()
-        print(f"   ✅ to_dict() works: {len(receipt_dict)} fields")
-        print(f"   ✅ to_json() works: {len(receipt_json)} characters")
-        
-        # Test expiration
-        if receipt.is_expired():
-            print("   ⚠️  Receipt has expired")
-        else:
-            time_left = receipt.time_until_expiration()
-            if time_left:
-                print(f"   ✅ Receipt valid for {time_left:.0f} more seconds")
-            else:
-                print("   ✅ Receipt is valid")
-                
-    except Exception as e:
-        print(f"   ❌ Receipt operations failed: {e}")
-        return False
-    
-    print("\n" + "=" * 50)
-    print("🎯 SETUP TEST RESULTS:")
-    print("✅ Certificate generation: WORKING")
-    print("✅ Receipt signing: WORKING") 
-    print("✅ Receipt validation: WORKING")
-    print("✅ Receipt operations: WORKING")
-    print("\n🎉 Your PoI SDK is properly configured with certificates!")
-    
-    return True
 
-if __name__ == "__main__":
-    test_certificate_setup()
-```
-
-### 2. Run the Test
-
-```bash
-# Make sure your environment is configured
-export POI_PRIVATE_KEY_PATH="~/poi-keys/private_key.pem"
-export POI_CERTIFICATE_PATH="~/poi-keys/certificate.pem"
-export POI_PUBLIC_KEY_PATH="~/poi-keys/public_key.pem"
-
-# Run the test
-python3 test_setup.py
-```
-
-### 3. Expected Output
-
-```
-🔐 Testing PoI SDK Certificate Setup
-==================================================
-
-1. Checking environment configuration...
-   ✅ POI_PRIVATE_KEY_PATH: ~/poi-keys/private_key.pem
-   ✅ POI_CERTIFICATE_PATH: ~/poi-keys/certificate.pem
-   ✅ POI_PUBLIC_KEY_PATH: ~/poi-keys/public_key.pem
-
-2. Testing receipt generation with certificates...
-   ✅ Receipt generated: poi_abc123def456
-   ✅ Signature algorithm: rsa
-   ✅ Signature length: 344 characters
-
-3. Testing receipt validation with certificates...
-   ✅ Receipt validation: SUCCESS
-   🎉 Cryptographic signature verification successful!
-
-4. Testing receipt operations...
-   ✅ to_dict() works: 15 fields
-   ✅ to_json() works: 1234 characters
-   ✅ Receipt valid for 3599 more seconds
-
-==================================================
-🎯 SETUP TEST RESULTS:
-✅ Certificate generation: WORKING
-✅ Receipt signing: WORKING
-✅ Receipt validation: WORKING
-✅ Receipt operations: WORKING
-
-🎉 Your PoI SDK is properly configured with certificates!
-```
 
 ## 📚 Next Steps
 
