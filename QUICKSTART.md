@@ -25,7 +25,87 @@ pip install -e .
 
 **💡 After installation, continue below for certificate setup and first steps.**
 
-## 🧪 Test Your Installation
+## 🛠️ Automated Setup with Utils Scripts
+
+The PoI SDK includes utility scripts to automate the entire setup process. These scripts handle package installation, certificate generation, and environment configuration automatically.
+
+### 📋 Utils Scripts Quick Reference
+
+| Script | Purpose | Use Case | Complexity |
+|--------|---------|----------|------------|
+| `setup_environment.py` | Complete setup | 🚀 One-stop solution | 🟢 Easy |
+| `install_package.py` | Package installation | 📦 Install SDK only | 🟢 Easy |
+| `generate_certificates_simple.py` | Certificate generation | 🔐 Generate keys/certs | 🟢 Easy |
+| `generate_certificates.py` | Advanced certificate generation | 🎨 Custom settings | 🟡 Medium |
+| `README.md` | Utils documentation | 📚 Complete guide | 📖 Reference |
+
+### 🚀 One-Stop Setup (Recommended)
+
+For the fastest setup experience, use the comprehensive setup script:
+
+```bash
+# Run the complete environment setup
+python utils/setup_environment.py
+```
+
+This script will:
+- ✅ Install the `poi-sdk` package from PyPI
+- ✅ Generate test certificates and keys
+- ✅ Create configuration files
+- ✅ Validate your setup
+
+### 📦 Package Installation Only
+
+If you just need to install the package:
+
+```bash
+# Install poi-sdk from PyPI
+python utils/install_package.py
+```
+
+### 🔐 Certificate Generation Only
+
+If you need to generate test certificates:
+
+```bash
+# Generate test certificates and keys
+python utils/generate_certificates_simple.py
+```
+
+**💡 The simple version is recommended for most users. For advanced options, see `utils/generate_certificates.py`**
+
+### 📋 What the Utils Scripts Generate
+
+The utils scripts automatically create:
+
+```
+test_keys/
+├── private_key.pem          # RSA private key
+├── public_key.pem           # RSA public key
+├── rsa_bundle.p12           # PKCS#12 bundle
+├── ec_private_key.pem       # ECDSA private key
+├── ec_public_key.pem        # ECDSA public key
+└── ecdsa_bundle.p12         # ECDSA PKCS#12 bundle
+
+test_certs/
+├── certificate.pem           # RSA certificate
+└── ec_certificate.pem       # ECDSA certificate
+
+Configuration Files:
+├── .env.test                # Environment variables
+└── poi_config_test.yaml     # SDK configuration
+```
+
+### 🔧 Manual Setup vs Utils Scripts
+
+| Setup Method | Speed | Customization | Complexity |
+|--------------|-------|---------------|------------|
+| **Utils Scripts** | ⚡ Fast | 🎯 Good | 🟢 Easy |
+| **Manual Setup** | 🐌 Slow | 🎨 Full | 🟡 Medium |
+
+**💡 For beginners and quick development, use the utils scripts. For production, consider manual setup with proper key management.**
+
+## Test Your Installation
 
 Let's verify that your PoI SDK installation is working correctly:
 
@@ -51,7 +131,19 @@ To generate and validate cryptographically signed receipts, you'll need to creat
 
 ### 1. Generate Test Certificates
 
-#### Option A: Using OpenSSL (Recommended)
+#### Option A: Using Utils Scripts (Recommended for Quick Start)
+
+```bash
+# Use the automated certificate generation
+python utils/generate_certificates_simple.py
+
+# Or for complete setup including package installation
+python utils/setup_environment.py
+```
+
+**💡 This is the fastest way to get started. The scripts automatically generate all necessary files and set proper permissions.**
+
+#### Option B: Using OpenSSL (Manual Setup)
 
 ```bash
 # Create a directory for your certificates
@@ -85,7 +177,52 @@ poi-cli generate --help
 
 ### 2. Configure Your Environment
 
-#### Environment Variables
+#### Option A: Using Generated Configuration Files (Recommended)
+
+If you used the utils scripts, configuration files are automatically created:
+
+```bash
+# Source the generated environment file
+source .env.test
+
+# Or use the generated config file
+export POI_CONFIG_PATH="poi_config_test.yaml"
+```
+
+**💡 The utils scripts create these files with the correct paths and settings for your test environment.**
+
+The generated `.env.test` file contains:
+
+```bash
+# Test environment configuration
+POI_PRIVATE_KEY_PATH=./test_keys/private_key.pem
+POI_CERTIFICATE_PATH=./test_certs/certificate.pem
+POI_PUBLIC_KEY_PATH=./test_keys/public_key.pem
+POI_DEFAULT_EXPIRATION_HOURS=1
+POI_RISK_THRESHOLD=medium
+POI_SIGNATURE_ALGORITHM=rsa
+```
+
+And `poi_config_test.yaml` contains:
+
+```yaml
+poi:
+  keys:
+    private_key_path: ./test_keys/private_key.pem
+    certificate_path: ./test_certs/certificate.pem
+    public_key_path: ./test_keys/public_key.pem
+  
+  defaults:
+    expiration_hours: 1
+    risk_threshold: medium
+    signature_algorithm: rsa
+  
+  validation:
+    clock_skew_tolerance_seconds: 300
+    require_certificate_validation: true
+```
+
+#### Option B: Manual Environment Configuration
 
 ```bash
 # Set these in your shell or .env file
@@ -120,14 +257,30 @@ poi:
 
 ### 3. Test Your Setup
 
+#### Option A: Using Utils-Generated Files (Recommended)
+
+If you used the utils scripts, test with the generated files:
+
 ```python
 from poi_sdk import PoIGenerator, PoIValidator
 
-# Test with your certificates
+# Test with utils-generated certificates
 generator = PoIGenerator(
-    private_key_path="~/poi-keys/private_key.pem",
-    certificate_path="~/poi-keys/certificate.pem"
+    private_key_path="./test_keys/private_key.pem",
+    certificate_path="./test_certs/certificate.pem"
 )
+
+validator = PoIValidator(
+    public_key_path="./test_keys/public_key.pem",
+    certificate_path="./test_certs/certificate.pem"
+)
+```
+
+**💡 The utils scripts generate files in the current directory, so use relative paths like `./test_keys/`**
+
+#### Option B: Using Manual Setup Files
+
+If you generated certificates manually:
 
 validator = PoIValidator(
     public_key_path="~/poi-keys/public_key.pem",
@@ -150,6 +303,27 @@ print(f"Signature: {receipt.signature[:50]}...")
 ```
 
 ### 4. Troubleshooting Common Issues
+
+#### Utils Script Issues
+
+If you encounter problems with the utils scripts:
+
+```bash
+# Check Python version (requires 3.8+)
+python --version
+
+# Check if OpenSSL is installed
+openssl version
+
+# Verify the utils directory exists
+ls -la utils/
+
+# Check script permissions
+ls -la utils/*.py
+chmod +x utils/*.py  # Make scripts executable if needed
+```
+
+**💡 If the comprehensive setup script fails, try the individual scripts: `install_package.py` then `generate_certificates_simple.py`**
 
 #### Permission Errors
 ```bash
@@ -206,6 +380,55 @@ The SDK supports standard PEM formats:
 - **Private keys**: RSA or ECDSA in PEM format
 - **Certificates**: X.509 certificates in PEM format
 - **Public keys**: Extracted from certificates or standalone PEM files
+
+## 🔧 Advanced Utils Usage
+
+### Customizing Certificate Generation
+
+The utils scripts support customization for different use cases:
+
+```bash
+# View available options for certificate generation
+python utils/generate_certificates.py --help
+
+# Generate certificates with custom settings
+python utils/generate_certificates.py --key-size 4096 --curve secp384r1
+
+# Use specific output directories
+python utils/generate_certificates.py --output-dir ~/my-custom-keys
+```
+
+### Batch Operations
+
+For multiple environments or testing scenarios:
+
+```bash
+# Generate certificates for different environments
+mkdir -p ~/poi-keys/dev ~/poi-keys/staging ~/poi-keys/test
+
+# Generate dev certificates
+python utils/generate_certificates_simple.py --output-dir ~/poi-keys/dev
+
+# Generate staging certificates  
+python utils/generate_certificates_simple.py --output-dir ~/poi-keys/staging
+
+# Generate test certificates
+python utils/generate_certificates_simple.py --output-dir ~/poi-keys/test
+```
+
+### Integration with CI/CD
+
+The utils scripts can be integrated into automated workflows:
+
+```bash
+# In your CI/CD pipeline
+python utils/install_package.py --quiet --no-interaction
+python utils/generate_certificates_simple.py --output-dir /tmp/poi-keys
+
+# Use generated keys for testing
+export POI_PRIVATE_KEY_PATH="/tmp/poi-keys/private_key.pem"
+export POI_CERTIFICATE_PATH="/tmp/poi-keys/certificate.pem"
+```
 
 ## 📝 Your First PoI Receipt
 
@@ -511,6 +734,38 @@ test_receipt_validation()
 print("✅ Basic validation test passed!")
 ```
 
+### Testing with Utils-Generated Certificates
+
+If you used the utils scripts, test with the generated certificates:
+
+```python
+def test_with_utils_certificates():
+    generator = PoIGenerator(
+        private_key_path="./test_keys/private_key.pem",
+        certificate_path="./test_certs/certificate.pem"
+    )
+    
+    validator = PoIValidator(
+        public_key_path="./test_keys/public_key.pem",
+        certificate_path="./test_certs/certificate.pem"
+    )
+    
+    receipt = generator.generate_receipt(
+        agent_id="utils_test_agent",
+        action="test_action",
+        target_resource="test_resource",
+        declared_objective="Test with utils-generated certificates"
+    )
+    
+    is_valid = validator.validate_receipt(receipt)
+    print(f"Utils certificate test: {'✅ PASSED' if is_valid else '❌ FAILED'}")
+    
+    return is_valid
+
+# Run utils certificate test
+test_with_utils_certificates()
+```
+
 ## Error Handling
 
 ### Handle Validation Errors
@@ -541,6 +796,44 @@ except Exception as e:
     print(f"🚨 Generation error: {e}")
 ```
 
+### Utils Script Error Handling
+
+If you encounter errors with the utils scripts:
+
+```python
+import subprocess
+import sys
+
+def run_utils_with_error_handling():
+    try:
+        # Try the simple certificate generation first
+        result = subprocess.run(
+            ["python", "utils/generate_certificates_simple.py"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("✅ Utils script completed successfully")
+        print(result.stdout)
+        return True
+        
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Utils script failed with exit code {e.returncode}")
+        print(f"Error output: {e.stderr}")
+        print(f"Standard output: {e.stdout}")
+        
+        # Fallback to manual setup
+        print("🔄 Falling back to manual setup...")
+        return False
+        
+    except FileNotFoundError:
+        print("❌ Utils scripts not found. Make sure you're in the correct directory.")
+        return False
+
+# Run with error handling
+run_utils_with_error_handling()
+```
+
 
 
 
@@ -553,12 +846,14 @@ except Exception as e:
 
 1. **Explore Advanced Features**: Check out the full [README](README.md) for detailed documentation
 2. **Customize Your Implementation**: Adapt the examples to your specific use case
-3. **Join the Community**: Visit [GitHub Discussions](https://github.com/giovannypietro/poi/discussions) to share your experience
-4. **Contribute**: Help improve the SDK by submitting issues or pull requests
+3. **Master the Utils**: Explore the `utils/` directory for automation scripts and advanced features
+4. **Join the Community**: Visit [GitHub Discussions](https://github.com/giovannypietro/poi/discussions) to share your experience
+5. **Contribute**: Help improve the SDK by submitting issues or pull requests
 
 ## Need Help?
 
 - **Documentation**: [Full README](README.md)
+- **Utils Scripts**: [Utils README](utils/README.md) - Complete guide to automation scripts
 - **Issues**: [GitHub Issues](https://github.com/giovannypietro/poi/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/giovannypietro/poi/discussions)
 - **Examples**: Check the `examples/` directory for more use cases
@@ -568,3 +863,30 @@ except Exception as e:
 **🎉 Congratulations! You've successfully generated your first Proof-of-Intent receipt.**
 
 You're now ready to build trustworthy AI agents with cryptographic proof of their intentions!
+
+## 🚀 Complete Utils Workflow
+
+Here's the complete workflow using the utils scripts:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/giovannypietro/poi-examples.git
+cd poi-examples
+
+# 2. Run the complete setup (recommended)
+python utils/setup_environment.py
+
+# 3. Test your setup
+python -c "
+from poi_sdk import PoIGenerator, PoIValidator
+generator = PoIGenerator('./test_keys/private_key.pem', './test_certs/certificate.pem')
+validator = PoIValidator('./test_keys/public_key.pem', './test_certs/certificate.pem')
+receipt = generator.generate_receipt('test_agent', 'test_action', 'test_resource', 'Test objective')
+print(f'✅ Receipt generated: {receipt.receipt_id}')
+print(f'✅ Validation: {validator.validate_receipt(receipt)}')
+"
+
+# 4. Start building your AI agents!
+```
+
+**💡 The utils scripts handle everything automatically - from package installation to certificate generation to configuration setup. You can focus on building your AI agents instead of managing infrastructure!**
