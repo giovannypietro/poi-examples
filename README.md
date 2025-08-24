@@ -6,27 +6,21 @@
 
 > **From Permissions to Proof-of-Intent: A Python SDK for creating trustworthy AI agent transactions**
 
-## 🚀 Quick Start
-
-```bash
-pip install poi-sdk
-```
-
 **📚 For detailed setup instructions, examples, and troubleshooting, see our [QUICKSTART Guide](QUICKSTART.md).**
 
-## 📖 What is Proof-of-Intent (PoI)?
+## What is Proof-of-Intent (PoI)?
 
-Proof-of-Intent (PoI) is a cryptographic framework that moves beyond traditional IAM by providing **provable trust** for AI agents. Instead of just asking "Does this agent have permission?", PoI answers "Why is it doing this, right now, on whose behalf, and with what justification?"
+Proof-of-Intent (PoI) is a cryptographic framework that moves beyond traditional IAM by providing **provable trust** for AI agents. Instead of just asking "Does this agent have permission?", PoI answers "Why is it doing this, right now, on whose behalf, and with what justification?" PoI also creates an end to end agent lineage that is auditable.
 
 ### Key Benefits
 
-- 🔐 **Cryptographic Proof**: Tamper-evident receipts for every privileged action
-- 🎯 **Intent Transparency**: Clear declaration of agent objectives and justifications
-- 🔗 **Agent Lineage**: Complete chain of responsibility from human to sub-agents
-- ⏰ **Temporal Security**: Time-boxed permissions with expiration
-- 📋 **Audit Trail**: Immutable records for compliance and security
+- **Cryptographic Proof**: Tamper-evident receipts for every privileged action
+- **Intent Transparency**: Clear declaration of agent objectives and justifications
+- **Agent Lineage**: Complete chain of responsibility from human to sub-agents
+- **Temporal Security**: Time-boxed permissions with expiration
+- **Audit Trail**: Immutable records for compliance and security
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -35,15 +29,11 @@ Proof-of-Intent (PoI) is a cryptographic framework that moves beyond traditional
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 🛠️ Installation
+## Installation
 
 **📚 For complete installation instructions, prerequisites, and setup steps, see our [QUICKSTART Guide](QUICKSTART.md).**
-
-```bash
-pip install poi-sdk
-```
-
-## 📚 Core Concepts
+`
+##  Core Concepts
 
 ### 1. PoI Receipt
 
@@ -57,21 +47,9 @@ Creates and cryptographically signs receipts using RSA or ECDSA algorithms. It c
 
 Verifies receipt authenticity and validity by checking cryptographic signatures, expiration times, and structural integrity. It supports both RSA and ECDSA signature verification.
 
-## 🔧 Usage Examples
+## Usage Examples
 
 **📚 For comprehensive usage examples including basic usage, LangGraph integration, N8N workflows, and advanced patterns, see our [QUICKSTART Guide](QUICKSTART.md).**
-
-## 🔌 Integration Examples
-
-**📚 For detailed integration examples with LangGraph, N8N, and custom agent frameworks, see our [QUICKSTART Guide](QUICKSTART.md).**
-
-## 🔐 Security Features
-
-### Cryptographic Signatures
-
-- **RSA/ECDSA Support**: Multiple signature algorithms
-- **Certificate-based**: X.509 certificate validation
-- **Tamper Detection**: Any modification invalidates signatures
 
 ### Agent Lineage Binding
 
@@ -85,27 +63,7 @@ Verifies receipt authenticity and validity by checking cryptographic signatures,
 - **Clock Skew Protection**: Tolerance for time differences
 - **Replay Attack Prevention**: One-time use receipts
 
-## 📋 Configuration
-
-**💡 For detailed configuration instructions including certificate generation and environment setup, see our [QUICKSTART Guide](QUICKSTART.md).**
-
-### Environment Variables
-
-The SDK supports configuration via environment variables for key paths, expiration times, risk thresholds, and signature algorithms.
-
-### Configuration File
-
-The SDK can load configuration from YAML files, with support for hierarchical configuration and environment variable overrides.
-
-## 🧪 Testing
-
-**💡 For testing your certificate setup and running examples, see our [QUICKSTART Guide](QUICKSTART.md).**
-
-### Run Tests
-
-The SDK includes a comprehensive test suite that can be run with pytest, including coverage reporting and specific test file execution.
-
-## 📚 API Reference
+## API Reference
 
 ### Core Classes
 
@@ -151,18 +109,7 @@ Validates receipt authenticity and validity.
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### Development Setup
-
-The project includes development tools for code formatting, linting, type checking, and pre-commit hooks. See the [Contributing Guide](CONTRIBUTING.md) for detailed setup instructions.
-
-### Code Style
-
-- **Black**: Code formatting
-- **isort**: Import sorting
-- **flake8**: Linting
-- **mypy**: Type checking
-
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
